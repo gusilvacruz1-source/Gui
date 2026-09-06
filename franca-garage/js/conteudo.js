@@ -25,7 +25,12 @@
    para 0.85 se a foto for clara e o texto ficar difícil de ler.
    ------------------------------------------------------------------------- */
 const FUNDOS = {
-  hero:      'img/vectra-preto.jpg',      // Vectra preto — fundo do topo
+  hero:      'img/vectra-preto.jpg',      // Foto do topo (também é o cartaz do vídeo)
+
+  // VÍDEO NO TOPO — opcional. Deixe '' para ficar só a foto.
+  // Suba o arquivo em img/ e escreva o caminho aqui. Ex.: 'img/drift.mp4'
+  // Leia o aviso do vídeo no README antes: peso, formato e direitos.
+  hero_video: '',
   chamada:   'img/chevette-dourado.jpg', // Chevette dourado — fundo da faixa final
   escuridao: 0.72,   // 0 a 1
 

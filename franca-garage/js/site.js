@@ -42,6 +42,37 @@ function montaFundos() {
 
   poe('heroFundo', FUNDOS.hero);
   poe('chamadaFundo', FUNDOS.chamada);
+
+  montaVideoDoTopo();
+}
+
+/* O vídeo do topo entra por cima da foto — e a foto vira o cartaz que
+   aparece antes de o vídeo carregar. */
+function montaVideoDoTopo() {
+  const video = document.getElementById('heroVideo');
+  if (!video || !FUNDOS.hero_video) return;
+
+  // Quem pediu menos movimento no sistema fica só com a foto.
+  const quietinho = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (quietinho) return;
+
+  // Em rede economizando dados, também fica só a foto.
+  const rede = navigator.connection;
+  if (rede && (rede.saveData || /^(slow-)?2g$/.test(rede.effectiveType || ''))) return;
+
+  document.getElementById('heroFundo').hidden = false;
+
+  video.src = encodeURI(FUNDOS.hero_video);
+  if (FUNDOS.hero) video.poster = encodeURI(FUNDOS.hero);
+
+  // Só mostra depois que há imagem para mostrar, senão pisca preto.
+  video.addEventListener('loadeddata', () => { video.hidden = false; }, { once: true });
+
+  // Se o vídeo não carregar, a foto continua lá e ninguém percebe.
+  video.addEventListener('error', () => { video.hidden = true; }, { once: true });
+
+  const tocar = video.play();
+  if (tocar && tocar.catch) tocar.catch(() => { video.hidden = true; });
 }
 
 /* ---------- Fotos dos cards de serviço ---------- */

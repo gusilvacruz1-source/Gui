@@ -53,6 +53,36 @@ O arquivo tem sete partes numeradas:
 | 6. `DEPOIMENTOS` | Comentários de clientes. Começa vazio. |
 | 7. `CONTATO` | WhatsApp, Instagram e mapa. |
 
+### Vídeo no topo
+
+`FUNDOS.hero_video` troca a foto do topo por um vídeo. Suba o arquivo em `img/`
+e escreva o caminho: `hero_video: 'img/drift.mp4'`.
+
+A foto de `FUNDOS.hero` continua servindo: ela vira o **cartaz** — o que
+aparece enquanto o vídeo carrega, e o que fica no lugar dele quando o vídeo
+não roda. Nunca apague a foto ao pôr vídeo.
+
+O vídeo **não** entra em três situações, e em todas elas a foto assume sem
+buraco na tela:
+
+- quando o aparelho está com "reduzir movimento" ligado;
+- quando o navegador avisa que a rede é 2G ou está economizando dados;
+- quando o arquivo falha ao carregar ou o navegador barra a reprodução.
+
+**Peso é o ponto crítico.** Quem abre o site está no 4G, muitas vezes no meio
+da rua. Um vídeo de 20 MB gasta a internet da pessoa e demora a aparecer.
+Antes de subir:
+
+- corte para **6 a 10 segundos** e deixe em laço;
+- exporte em **MP4 (H.264)**, largura de 1280 ou 1920;
+- mire em **até 3 MB**, 5 MB no limite;
+- **sem áudio** — o vídeo toca mudo de qualquer jeito, então a faixa de som
+  só engorda o arquivo.
+
+E o mesmo cuidado da foto vale aqui: vídeo de drift baixado do Instagram ou do
+YouTube tem dono. Para o site de um negócio, use vídeo próprio, comprado, ou
+com licença livre declarada.
+
 ### Foto decorativa × foto de trabalho
 
 São lugares diferentes de propósito:
