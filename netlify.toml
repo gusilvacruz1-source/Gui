@@ -1,9 +1,31 @@
-# Site estático sem build: publica a raiz do repositório.
+# Configuração do Netlify.
+#
+# ATENÇÃO: este arquivo manda mais que a tela de configurações do Netlify.
+# O que estiver escrito aqui vence o que você escolher lá. Para trocar a
+# pasta publicada, mude aqui — mexer só na tela não adianta.
+
 [build]
-  publish = "."
+  # O site que vai ao ar é o da França Garage.
+  # A raiz do repositório é só a base em branco, não deve ser publicada.
+  publish = "franca-garage"
 
 [[headers]]
   for = "/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Fotos e vídeo não mudam de conteúdo, só de nome. Uma semana de cache poupa
+# a internet de quem volta ao site — principalmente os 5,8 MB do vídeo.
+# Não use "immutable" aqui: se você trocar uma foto mantendo o mesmo nome de
+# arquivo, quem já visitou continuaria vendo a antiga.
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# A ferramenta da oficina não deve aparecer em buscador.
+[[headers]]
+  for = "/orcamento.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
