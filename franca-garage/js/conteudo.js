@@ -14,7 +14,40 @@
 
 
 /* -------------------------------------------------------------------------
-   1) OS CARROS DO PORTFÓLIO  (antes e depois)
+   1) FOTOS DE FUNDO  (decoração — pode ser qualquer carro bonito)
+
+   Estas fotos são só enfeite. Não afirmam nada, não dizem que o carro passou
+   pela oficina. É o lugar certo para foto de banco de imagem, foto de carro
+   da internet ou foto que você achou bonita.
+
+   'escuridao' é o quanto a foto escurece por baixo do texto: 0 mostra a foto
+   inteira e o texto some, 1 apaga a foto. 0.72 é um bom meio-termo — suba
+   para 0.85 se a foto for clara e o texto ficar difícil de ler.
+   ------------------------------------------------------------------------- */
+const FUNDOS = {
+  hero:      '',     // Fundo do topo da página. Ex.: 'img/fundo-topo.jpg'
+  chamada:   '',     // Fundo da faixa "Manda a foto do estrago", lá embaixo
+  escuridao: 0.72,   // 0 a 1
+};
+
+
+/* -------------------------------------------------------------------------
+   2) O PORTFÓLIO — ATENÇÃO
+
+   Esta seção diz "Antes e depois, sem retoque de foto" e mostra o veículo e
+   o serviço. Ela afirma que aquele carro passou pela França Garage.
+
+   Por isso ela nasce DESLIGADA. Só ligue quando tiver foto de trabalho de
+   verdade — carro que a oficina atendeu, antes e depois. Foto decorativa
+   não entra aqui; vai em FUNDOS, ali em cima.
+
+   Para ligar: troque false por true.
+   ------------------------------------------------------------------------- */
+const MOSTRAR_PORTFOLIO = false;
+
+
+/* -------------------------------------------------------------------------
+   3) OS CARROS DO PORTFÓLIO  (só valem se MOSTRAR_PORTFOLIO estiver true)
 
    Cada bloco { ... } é um carro. Para adicionar outro, copie um bloco
    inteiro, cole embaixo e troque as informações. Pode ter quantos quiser.
@@ -43,9 +76,11 @@ const TRABALHOS = [
 
 
 /* -------------------------------------------------------------------------
-   2) AS FOTOS DOS SERVIÇOS  (os quatro cards de cima)
+   4) AS FOTOS DOS SERVIÇOS  (os quatro cards de cima)
 
-   Uma foto boa de cada coisa. Deixe '' que fica o fundo listrado.
+   Aqui pode ser foto decorativa também — os cards não dizem que o carro é
+   cliente da oficina, só ilustram o serviço. Deixe '' que fica o fundo
+   listrado.
    ------------------------------------------------------------------------- */
 const FOTOS_SERVICOS = {
   funilaria: '',    // Ex.: 'img/funilaria.jpg'
@@ -56,7 +91,7 @@ const FOTOS_SERVICOS = {
 
 
 /* -------------------------------------------------------------------------
-   3) OS NÚMEROS DA OFICINA
+   5) OS NÚMEROS DA OFICINA
 
    Só ponha número que seja verdade. Se não souber, deixe '' que o card
    some da página — melhor sumir do que mentir.
@@ -69,7 +104,7 @@ const NUMEROS = [
 
 
 /* -------------------------------------------------------------------------
-   4) OS DEPOIMENTOS
+   6) OS DEPOIMENTOS
 
    Use só comentário real de cliente, e peça autorização antes de publicar.
    Deixe a lista vazia assim  ->  const DEPOIMENTOS = [];
@@ -85,7 +120,7 @@ const DEPOIMENTOS = [
 
 
 /* -------------------------------------------------------------------------
-   5) OS DADOS DA OFICINA
+   7) OS DADOS DA OFICINA
 
    ATENÇÃO NO TELEFONE: o número precisa ser  55 + DDD + número, só dígitos.
    O contato que você mandou aparece como (42) 9918-1070 — 8 dígitos depois

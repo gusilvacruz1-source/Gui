@@ -232,6 +232,33 @@ body {
   pointer-events: none;
 }
 
+/* Foto de fundo decorativa. A escuridão vem do conteudo.js. */
+.fundo-foto {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.fundo-foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 6, var(--escuridao, 0.72));
+}
+
+/* No topo, a foto some para o preto no fim da seção, para emendar na
+   próxima sem linha de corte. */
+.fundo-foto--hero::after {
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 5, 6, calc(var(--escuridao, 0.72) * 0.86)) 0%,
+    rgba(5, 5, 6, var(--escuridao, 0.72)) 58%,
+    var(--fundo) 100%
+  );
+}
+
 .hero__conteudo { position: relative; }
 
 .aviso-topo {

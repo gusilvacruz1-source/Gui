@@ -41,15 +41,33 @@ no HTML nem no CSS.
 Nome de arquivo **sem espaço e sem acento**:
 `img/gol-prata-antes.jpg` funciona, `img/Gol Prata Antes.JPG` não.
 
-O arquivo tem cinco partes numeradas:
+O arquivo tem sete partes numeradas:
 
 | Parte | O que é |
 |---|---|
-| 1. `TRABALHOS` | Os carros do portfólio. Um bloco por carro: veículo, serviço, foto antes, foto depois. Copie um bloco para adicionar outro — pode ter quantos quiser. |
-| 2. `FOTOS_SERVICOS` | As fotos dos quatro cards de cima (funilaria, pintura, solda, orçamento). |
-| 3. `NUMEROS` | Carros entregues, anos de oficina, cidades atendidas. |
-| 4. `DEPOIMENTOS` | Comentários de clientes. Começa vazio. |
-| 5. `CONTATO` | WhatsApp, Instagram e mapa. |
+| 1. `FUNDOS` | **Foto de fundo decorativa** do topo e da faixa final. Pode ser qualquer carro bonito — não afirma nada. |
+| 2. `MOSTRAR_PORTFOLIO` | Liga/desliga a seção antes-e-depois. Nasce `false`. |
+| 3. `TRABALHOS` | Os carros do portfólio. Só valem com o item 2 em `true`. |
+| 4. `FOTOS_SERVICOS` | As fotos dos quatro cards de cima. Também aceita foto decorativa. |
+| 5. `NUMEROS` | Carros entregues, anos de oficina, cidades atendidas. |
+| 6. `DEPOIMENTOS` | Comentários de clientes. Começa vazio. |
+| 7. `CONTATO` | WhatsApp, Instagram e mapa. |
+
+### Foto decorativa × foto de trabalho
+
+São lugares diferentes de propósito:
+
+- **`FUNDOS` e `FOTOS_SERVICOS`** são decoração. Ilustram, não afirmam. Foto de
+  banco de imagem entra aqui sem problema.
+- **`TRABALHOS`** é a seção que diz *"Antes e depois, sem retoque de foto"* e
+  mostra o veículo e o serviço — ela **afirma** que aquele carro passou pela
+  França Garage. Por isso `MOSTRAR_PORTFOLIO` nasce `false`: enquanto não
+  houver foto de serviço real, a seção não vai ao ar, e o link "Trabalhos"
+  some do menu sozinho.
+
+Em `FUNDOS`, o valor `escuridao` (de 0 a 1) controla o quanto a foto escurece
+por baixo do texto. `0.72` é o padrão; suba para `0.85` se a foto for clara e
+o texto ficar difícil de ler.
 
 **Campo vazio não vira buraco na página.** Sem foto, fica o fundo listrado.
 Sem número, o card some. Sem depoimento, a seção inteira sai do ar. É de

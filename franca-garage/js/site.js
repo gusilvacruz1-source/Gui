@@ -20,6 +20,24 @@ function lado(caminho, classe, alternativo, aviso) {
   return `<div class="antes-depois__lado ${classe}">${aviso}</div>`;
 }
 
+/* ---------- Fotos de fundo (decorativas) ---------- */
+function montaFundos() {
+  if (typeof FUNDOS === 'undefined') return;
+
+  document.documentElement.style.setProperty('--escuridao', String(FUNDOS.escuridao ?? 0.72));
+
+  const poe = (id, caminho) => {
+    const el = document.getElementById(id);
+    if (!el || !caminho) return;
+    // encodeURI protege caminho com espaço ou acento que tenha escapado.
+    el.style.backgroundImage = `url("${encodeURI(caminho)}")`;
+    el.hidden = false;
+  };
+
+  poe('heroFundo', FUNDOS.hero);
+  poe('chamadaFundo', FUNDOS.chamada);
+}
+
 /* ---------- Fotos dos cards de serviço ---------- */
 function montaFotosServicos() {
   if (typeof FOTOS_SERVICOS !== 'object') return;
@@ -61,6 +79,13 @@ function montaNumeros() {
 function montaTrabalhos() {
   const caixa = $('#listaTrabalhos');
   if (!caixa || typeof TRABALHOS === 'undefined') return;
+
+  // A seção afirma que o carro passou pela oficina. Sem trabalho real,
+  // ela não vai ao ar.
+  if (typeof MOSTRAR_PORTFOLIO !== 'undefined' && !MOSTRAR_PORTFOLIO) {
+    $('#trabalhos').hidden = true;
+    return;
+  }
 
   caixa.innerHTML = TRABALHOS.map((t) => `
     <article class="trabalho surge">
@@ -187,6 +212,22 @@ function ligaEntrada() {
   aSurgir.forEach((el) => observador.observe(el));
 }
 
+/* ---------- Some com link que aponta para seção fora do ar ----------
+   Vale para o menu, o rodapé e os botões do topo: link para seção
+   escondida vira um clique que não sai do lugar. */
+function limpaLinksMortos() {
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    const destino = a.getAttribute('href');
+    if (destino === '#' || destino === '#topo') return;
+
+    const alvo = document.querySelector(destino);
+    if (!alvo || !alvo.hidden) return;
+
+    const item = a.closest('li');
+    if (item) item.hidden = true; else a.hidden = true;
+  });
+}
+
 /* ---------- Cabeçalho e menu ---------- */
 function ligaCabecalho() {
   const cab = $('#cab');
@@ -213,6 +254,7 @@ function ligaCabecalho() {
 }
 
 /* ===================== Monta a página ===================== */
+montaFundos();
 montaFotosServicos();
 montaNumeros();
 montaTrabalhos();
@@ -222,6 +264,7 @@ montaContato();
 ligaComparadores();   // depois de montar o portfólio
 ligaEntrada();        // depois de tudo estar na página
 ligaCabecalho();
+limpaLinksMortos();
 
 const ano = $('#ano');
 if (ano) ano.textContent = new Date().getFullYear();
