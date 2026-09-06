@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orçamento · França Garage</title>
+<meta name="description" content="Ferramenta interna da França Garage para montar orçamento de peças e mão de obra e mandar para o cliente.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/orcamento.css">
+</head>
+<body>
+
+<!-- ============ BARRA SUPERIOR ============ -->
+<header class="topo">
+  <div class="topo__marca">
+    <span class="topo__logo" aria-hidden="true">FG</span>
+    <span class="topo__nome">França Garage<small>Funilaria &amp; Pintura</small></span>
+  </div>
+
+  <div class="topo__acoes">
+    <button type="button" class="btn btn--fantasma" id="btnHistorico">Salvos</button>
+    <button type="button" class="btn btn--fantasma" id="btnTabela">Tabela de preços</button>
+    <button type="button" class="btn btn--fantasma" id="btnNovo">Novo orçamento</button>
+  </div>
+</header>
+
+<main class="pagina">
+
+  <!-- ============ CABEÇALHO DO ORÇAMENTO ============ -->
+  <section class="bloco" aria-labelledby="tit-orcamento">
+    <div class="bloco__cabeca">
+      <h2 class="bloco__titulo" id="tit-orcamento">Orçamento</h2>
+      <p class="bloco__ajuda">O número sobe sozinho a cada orçamento novo.</p>
+    </div>
+
+    <div class="campos campos--3">
+      <label class="campo">
+        <span class="campo__rotulo">Número</span>
+        <input type="text" id="numero" data-campo="numero" inputmode="numeric" autocomplete="off">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Data</span>
+        <input type="date" id="data" data-campo="data">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Validade</span>
+        <select id="validade" data-campo="validade">
+          <option value="7">7 dias</option>
+          <option value="10">10 dias</option>
+          <option value="15" selected>15 dias</option>
+          <option value="30">30 dias</option>
+          <option value="">Sem prazo</option>
+        </select>
+      </label>
+    </div>
+  </section>
+
+  <!-- ============ CLIENTE ============ -->
+  <section class="bloco" aria-labelledby="tit-cliente">
+    <div class="bloco__cabeca">
+      <h2 class="bloco__titulo" id="tit-cliente">Cliente</h2>
+      <p class="bloco__ajuda">O WhatsApp aqui é para onde o orçamento vai ser enviado.</p>
+    </div>
+
+    <div class="campos campos--2">
+      <label class="campo">
+        <span class="campo__rotulo">Nome</span>
+        <input type="text" id="clienteNome" data-campo="cliente.nome" autocomplete="off" placeholder="Nome de quem vai receber">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">WhatsApp</span>
+        <input type="tel" id="clienteFone" data-campo="cliente.fone" inputmode="numeric" autocomplete="off" placeholder="(42) 99999-9999">
+        <span class="campo__nota" id="notaFone"></span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ============ VEÍCULO ============ -->
+  <section class="bloco" aria-labelledby="tit-veiculo">
+    <div class="bloco__cabeca">
+      <h2 class="bloco__titulo" id="tit-veiculo">Veículo</h2>
+    </div>
+
+    <div class="campos campos--4">
+      <label class="campo">
+        <span class="campo__rotulo">Marca e modelo</span>
+        <input type="text" id="veicModelo" data-campo="veiculo.modelo" autocomplete="off" placeholder="Ex.: Gol G6">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Ano</span>
+        <input type="text" id="veicAno" data-campo="veiculo.ano" inputmode="numeric" autocomplete="off" placeholder="2014">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Cor</span>
+        <input type="text" id="veicCor" data-campo="veiculo.cor" autocomplete="off" placeholder="Prata">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Placa</span>
+        <input type="text" id="veicPlaca" data-campo="veiculo.placa" autocomplete="off" placeholder="ABC1D23" maxlength="8">
+      </label>
+    </div>
+  </section>
+
+  <!-- ============ ITENS ============ -->
+  <section class="bloco" aria-labelledby="tit-itens">
+    <div class="bloco__cabeca">
+      <h2 class="bloco__titulo" id="tit-itens">Peças e mão de obra</h2>
+      <p class="bloco__ajuda">Marque cada linha como peça ou mão de obra — o total sai separado.</p>
+    </div>
+
+    <div class="tabela-area">
+      <table class="itens" id="tabelaItens">
+        <thead>
+          <tr>
+            <th scope="col" class="col-tipo">Tipo</th>
+            <th scope="col" class="col-desc">Descrição</th>
+            <th scope="col" class="col-qtd">Qtd</th>
+            <th scope="col" class="col-valor">Valor unit.</th>
+            <th scope="col" class="col-total">Subtotal</th>
+            <th scope="col" class="col-acao"><span class="oculto">Remover</span></th>
+          </tr>
+        </thead>
+        <tbody id="corpoItens"></tbody>
+      </table>
+
+      <p class="vazio" id="itensVazio">Nenhum item ainda. Adicione uma peça ou uma mão de obra abaixo.</p>
+    </div>
+
+    <div class="itens__acoes">
+      <button type="button" class="btn btn--solido" id="btnAddPeca">+ Peça</button>
+      <button type="button" class="btn btn--solido" id="btnAddMao">+ Mão de obra</button>
+      <button type="button" class="btn btn--fantasma" id="btnCatalogo">Serviços frequentes</button>
+    </div>
+  </section>
+
+  <!-- ============ CONDIÇÕES ============ -->
+  <section class="bloco" aria-labelledby="tit-condicoes">
+    <div class="bloco__cabeca">
+      <h2 class="bloco__titulo" id="tit-condicoes">Condições</h2>
+    </div>
+
+    <div class="campos campos--3">
+      <label class="campo">
+        <span class="campo__rotulo">Desconto</span>
+        <div class="campo__grupo">
+          <input type="text" id="descontoValor" data-campo="condicoes.descontoValor" inputmode="decimal" autocomplete="off" placeholder="0">
+          <select id="descontoTipo" data-campo="condicoes.descontoTipo" aria-label="Tipo de desconto">
+            <option value="reais">R$</option>
+            <option value="porcento">%</option>
+          </select>
+        </div>
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Prazo de execução</span>
+        <input type="text" id="prazo" data-campo="condicoes.prazo" autocomplete="off" placeholder="Ex.: 5 dias úteis">
+      </label>
+      <label class="campo">
+        <span class="campo__rotulo">Pagamento</span>
+        <input type="text" id="pagamento" data-campo="condicoes.pagamento" autocomplete="off" placeholder="Ex.: 50% na entrada, 50% na entrega">
+      </label>
+    </div>
+
+    <label class="campo">
+      <span class="campo__rotulo">Observações</span>
+      <textarea id="observacoes" data-campo="condicoes.observacoes" rows="3" placeholder="O que o cliente precisa saber: peça sob encomenda, serviço não incluso, estado da peça retirada..."></textarea>
+    </label>
+  </section>
+
+</main>
+
+<!-- ============ RESUMO FIXO ============ -->
+<aside class="resumo" id="resumo" aria-label="Total do orçamento">
+  <div class="resumo__linhas">
+    <div class="resumo__linha"><span>Peças</span><strong id="totPecas">R$ 0,00</strong></div>
+    <div class="resumo__linha"><span>Mão de obra</span><strong id="totMao">R$ 0,00</strong></div>
+    <div class="resumo__linha resumo__linha--desconto" id="linhaDesconto" hidden><span>Desconto</span><strong id="totDesconto">− R$ 0,00</strong></div>
+    <div class="resumo__linha resumo__linha--total"><span>Total</span><strong id="totGeral">R$ 0,00</strong></div>
+  </div>
+
+  <div class="resumo__acoes">
+    <button type="button" class="btn btn--zap" id="btnWhats">Mandar no WhatsApp</button>
+    <button type="button" class="btn btn--solido" id="btnImprimir">PDF / Imprimir</button>
+    <button type="button" class="btn btn--fantasma" id="btnSalvar">Salvar</button>
+  </div>
+</aside>
+
+<!-- ============ PAINEL LATERAL (histórico / catálogo / tabela) ============ -->
+<div class="veu" id="veu" hidden></div>
+
+<section class="painel" id="painel" hidden aria-labelledby="painelTitulo" role="dialog" aria-modal="true">
+  <header class="painel__cabeca">
+    <h2 class="painel__titulo" id="painelTitulo">Painel</h2>
+    <button type="button" class="painel__fechar" id="painelFechar" aria-label="Fechar painel">×</button>
+  </header>
+  <div class="painel__corpo" id="painelCorpo"></div>
+</section>
+
+<!-- ============ AVISO ============ -->
+<div class="aviso" id="aviso" role="status" aria-live="polite" hidden></div>
+
+<!-- ============ DOCUMENTO DE IMPRESSÃO ============ -->
+<div class="impressao" id="impressao" aria-hidden="true"></div>
+
+<script src="js/orcamento.js"></script>
+</body>
+</html>
