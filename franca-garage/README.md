@@ -29,21 +29,37 @@ Tudo fica no `localStorage` **do aparelho que montou o orçamento**. Não sobe
 para servidor nenhum: o que foi montado no celular não aparece no computador,
 e limpar os dados do navegador apaga o histórico.
 
-## O que falta preencher
+## Onde você põe os carros
 
-Ficou marcado no código, é só procurar:
+Tudo o que muda está em **um arquivo só: `js/conteudo.js`**. Não precisa mexer
+no HTML nem no CSS.
 
-- `data-foto` — os lugares onde entram as fotos (serviços e antes/depois).
-- `data-conferir="numero"` — os três números da seção "Resultado" estão em `00`.
-- `data-conferir="depoimento"` — os três depoimentos são texto de espera.
-- `CONTATO.whatsapp` em `js/site.js` e `OFICINA` em `js/orcamento.js` — dados
-  da oficina, inclusive o número do WhatsApp (ver aviso abaixo).
+1. Jogue as fotos dentro da pasta `img/`
+2. Abra `js/conteudo.js` e escreva o caminho da foto começando com `img/`
+3. Salve e suba — o site se monta sozinho
+
+Nome de arquivo **sem espaço e sem acento**:
+`img/gol-prata-antes.jpg` funciona, `img/Gol Prata Antes.JPG` não.
+
+O arquivo tem cinco partes numeradas:
+
+| Parte | O que é |
+|---|---|
+| 1. `TRABALHOS` | Os carros do portfólio. Um bloco por carro: veículo, serviço, foto antes, foto depois. Copie um bloco para adicionar outro — pode ter quantos quiser. |
+| 2. `FOTOS_SERVICOS` | As fotos dos quatro cards de cima (funilaria, pintura, solda, orçamento). |
+| 3. `NUMEROS` | Carros entregues, anos de oficina, cidades atendidas. |
+| 4. `DEPOIMENTOS` | Comentários de clientes. Começa vazio. |
+| 5. `CONTATO` | WhatsApp, Instagram e mapa. |
+
+**Campo vazio não vira buraco na página.** Sem foto, fica o fundo listrado.
+Sem número, o card some. Sem depoimento, a seção inteira sai do ar. É de
+propósito: melhor faltar do que publicar `00` ou depoimento inventado.
 
 ### Aviso sobre o telefone
 
 O contato recebido aparece como **+55 42 9918-1070** — 8 dígitos depois do DDD.
 Celular no Brasil tem 9. Se o número certo for 99918-1070, troque
-`554299181070` por `5542999181070` nos dois arquivos JS.
+`554299181070` por `5542999181070` em `js/conteudo.js` e em `js/orcamento.js`.
 
 ## Rodar local
 

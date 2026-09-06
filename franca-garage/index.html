@@ -144,32 +144,14 @@
   </section>
 
   <!-- ===================== NÚMEROS ===================== -->
-  <section class="secao" style="padding-top: 0;">
+  <section class="secao" id="secaoNumeros" style="padding-top: 0;">
     <div class="env">
       <div class="secao__cabeca surge">
         <span class="selo">Resultado</span>
         <h2 class="titulo">Trabalho que dá para conferir de perto</h2>
       </div>
 
-      <div class="bento">
-        <article class="cartao cartao--meio surge" data-conferir="numero">
-          <p class="cartao__numero"><span>00</span></p>
-          <h3 class="cartao__titulo">Carros entregues</h3>
-          <p class="cartao__texto">Trocar pelo número real da oficina.</p>
-        </article>
-
-        <article class="cartao cartao--meio surge" data-conferir="numero">
-          <p class="cartao__numero"><span>00</span></p>
-          <h3 class="cartao__titulo">Anos de oficina</h3>
-          <p class="cartao__texto">Trocar pelo tempo real de casa.</p>
-        </article>
-
-        <article class="cartao cartao--meio surge" data-conferir="numero">
-          <p class="cartao__numero"><span>00</span></p>
-          <h3 class="cartao__titulo">Cidades atendidas</h3>
-          <p class="cartao__texto">Imbaú e região — trocar pelo número real.</p>
-        </article>
-      </div>
+      <div class="bento" id="listaNumeros"></div>
     </div>
   </section>
 
@@ -185,52 +167,7 @@
         </p>
       </div>
 
-      <div class="trabalhos">
-        <article class="trabalho surge">
-          <div class="antes-depois" data-antes-depois tabindex="0" role="slider"
-               aria-label="Comparação antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-            <div class="antes-depois__lado antes-depois__antes" data-foto="antes">Foto antes</div>
-            <div class="antes-depois__lado antes-depois__depois" data-foto="depois">Foto depois</div>
-            <span class="antes-depois__alca" aria-hidden="true"></span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--a">Antes</span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--d">Depois</span>
-          </div>
-          <div class="trabalho__pe">
-            <span class="trabalho__nome">Trocar pelo veículo</span>
-            <span class="trabalho__tipo">Funilaria e pintura</span>
-          </div>
-        </article>
-
-        <article class="trabalho surge">
-          <div class="antes-depois" data-antes-depois tabindex="0" role="slider"
-               aria-label="Comparação antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-            <div class="antes-depois__lado antes-depois__antes" data-foto="antes">Foto antes</div>
-            <div class="antes-depois__lado antes-depois__depois" data-foto="depois">Foto depois</div>
-            <span class="antes-depois__alca" aria-hidden="true"></span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--a">Antes</span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--d">Depois</span>
-          </div>
-          <div class="trabalho__pe">
-            <span class="trabalho__nome">Trocar pelo veículo</span>
-            <span class="trabalho__tipo">Solda e lataria</span>
-          </div>
-        </article>
-
-        <article class="trabalho surge">
-          <div class="antes-depois" data-antes-depois tabindex="0" role="slider"
-               aria-label="Comparação antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-            <div class="antes-depois__lado antes-depois__antes" data-foto="antes">Foto antes</div>
-            <div class="antes-depois__lado antes-depois__depois" data-foto="depois">Foto depois</div>
-            <span class="antes-depois__alca" aria-hidden="true"></span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--a">Antes</span>
-            <span class="antes-depois__etiqueta antes-depois__etiqueta--d">Depois</span>
-          </div>
-          <div class="trabalho__pe">
-            <span class="trabalho__nome">Trocar pelo veículo</span>
-            <span class="trabalho__tipo">Pintura completa</span>
-          </div>
-        </article>
-      </div>
+      <div class="trabalhos" id="listaTrabalhos"></div>
     </div>
   </section>
 
@@ -288,47 +225,14 @@
   </section>
 
   <!-- ===================== DEPOIMENTOS ===================== -->
-  <section class="secao" style="padding-top: 0;">
+  <section class="secao" id="secaoDepoimentos" style="padding-top: 0;">
     <div class="env">
       <div class="secao__cabeca surge">
         <span class="selo">Clientes</span>
         <h2 class="titulo">O que dizem depois de buscar o carro</h2>
       </div>
 
-      <div class="depoimentos">
-        <article class="depoimento surge" data-conferir="depoimento">
-          <p>Espaço reservado para um depoimento real de cliente. Trocar por um comentário recebido no direct ou no WhatsApp, com autorização.</p>
-          <div class="depoimento__pessoa">
-            <span class="depoimento__avatar">—</span>
-            <span>
-              <span class="depoimento__nome">Nome do cliente</span><br>
-              <span class="depoimento__de">Veículo atendido</span>
-            </span>
-          </div>
-        </article>
-
-        <article class="depoimento surge" data-conferir="depoimento">
-          <p>Espaço reservado para um depoimento real de cliente. Trocar por um comentário recebido no direct ou no WhatsApp, com autorização.</p>
-          <div class="depoimento__pessoa">
-            <span class="depoimento__avatar">—</span>
-            <span>
-              <span class="depoimento__nome">Nome do cliente</span><br>
-              <span class="depoimento__de">Veículo atendido</span>
-            </span>
-          </div>
-        </article>
-
-        <article class="depoimento surge" data-conferir="depoimento">
-          <p>Espaço reservado para um depoimento real de cliente. Trocar por um comentário recebido no direct ou no WhatsApp, com autorização.</p>
-          <div class="depoimento__pessoa">
-            <span class="depoimento__avatar">—</span>
-            <span>
-              <span class="depoimento__nome">Nome do cliente</span><br>
-              <span class="depoimento__de">Veículo atendido</span>
-            </span>
-          </div>
-        </article>
-      </div>
+      <div class="depoimentos" id="listaDepoimentos"></div>
     </div>
   </section>
 
@@ -452,6 +356,7 @@
   </div>
 </footer>
 
+<script src="js/conteudo.js"></script>
 <script src="js/site.js"></script>
 </body>
 </html>
