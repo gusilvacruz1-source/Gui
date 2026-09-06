@@ -1,0 +1,187 @@
+/* ===== Tokens: mexa só aqui para mudar a cara do site ===== */
+:root {
+  --cor-fundo: #ffffff;
+  --cor-fundo-alt: #f5f3f0;
+  --cor-texto: #1c1c1c;
+  --cor-texto-suave: #5c5c5c;
+  --cor-destaque: #54171b;
+  --cor-destaque-clara: #7a2a2f;
+  --cor-borda: #e6e2dd;
+
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --raio: 18px;
+  --container: 1120px;
+  --espaco-secao: 88px;
+}
+
+/* ===== Reset enxuto ===== */
+*, *::before, *::after { box-sizing: border-box; }
+body, h1, h2, h3, p, figure { margin: 0; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--fonte);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* ===== Header ===== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 68px;
+  gap: 16px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.logo span { color: var(--cor-destaque); }
+
+.nav { display: flex; gap: 26px; }
+.nav a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+  transition: color 0.2s ease;
+}
+.nav a:hover { color: var(--cor-destaque); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.nav-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--cor-texto);
+  border-radius: 2px;
+}
+
+/* ===== Botão ===== */
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: var(--cor-destaque);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.btn:hover { background: var(--cor-destaque-clara); transform: translateY(-1px); }
+
+/* ===== Hero ===== */
+.hero {
+  padding: calc(var(--espaco-secao) + 24px) 0 var(--espaco-secao);
+  background: var(--cor-fundo-alt);
+}
+.hero__title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  max-width: 16ch;
+}
+.hero__text {
+  margin: 20px 0 32px;
+  font-size: 1.1rem;
+  color: var(--cor-texto-suave);
+  max-width: 52ch;
+}
+
+/* ===== Seções ===== */
+.section { padding: var(--espaco-secao) 0; }
+.section--alt { background: var(--cor-fundo-alt); }
+
+.section__title {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  padding: 28px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background: var(--cor-fundo);
+}
+.card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+.card p { color: var(--cor-texto-suave); }
+
+.contato { text-align: center; }
+.contato p { margin-bottom: 28px; color: var(--cor-texto-suave); }
+
+/* ===== Rodapé ===== */
+.footer {
+  padding: 32px 0;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 0.9rem;
+  color: var(--cor-texto-suave);
+}
+
+/* ===== Reveal ao rolar ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ===== Mobile ===== */
+@media (max-width: 760px) {
+  .nav {
+    position: absolute;
+    inset: 68px 0 auto;
+    flex-direction: column;
+    gap: 0;
+    background: var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-borda);
+    display: none;
+  }
+  .nav.is-open { display: flex; }
+  .nav a { padding: 14px 20px; }
+  .nav-toggle { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn:hover { transform: none; }
+}

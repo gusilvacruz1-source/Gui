@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novo Projeto</title>
+<meta name="description" content="Descrição do site em uma frase — aparece no Google e no preview do WhatsApp.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#inicio" class="logo">Novo<span>Projeto</span></a>
+
+    <nav class="nav" id="nav">
+      <a href="#inicio">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <div class="container">
+      <h1 class="hero__title">Um título curto que diz o que é.</h1>
+      <p class="hero__text">
+        Uma linha explicando para quem é e o que a pessoa ganha. Sem enrolação.
+      </p>
+      <a class="btn" href="#contato">Falar com a gente</a>
+    </div>
+  </section>
+
+  <section class="section" id="sobre">
+    <div class="container">
+      <h2 class="section__title">Sobre</h2>
+      <div class="grid">
+        <article class="card reveal">
+          <h3>Primeiro ponto</h3>
+          <p>Troque por conteúdo real. Uma ideia por cartão.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Segundo ponto</h3>
+          <p>Troque por conteúdo real. Uma ideia por cartão.</p>
+        </article>
+        <article class="card reveal">
+          <h3>Terceiro ponto</h3>
+          <p>Troque por conteúdo real. Uma ideia por cartão.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="contato">
+    <div class="container contato">
+      <h2 class="section__title">Contato</h2>
+      <p>Fale direto no WhatsApp — respondemos por lá.</p>
+      <a class="btn" href="https://wa.me/5542000000000" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p>&copy; <span id="ano"></span> Novo Projeto. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
