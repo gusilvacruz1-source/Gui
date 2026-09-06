@@ -3,15 +3,26 @@
 Site da França Garage — funilaria, pintura e solda em Imbaú-PR.
 HTML, CSS e JS puros, sem build.
 
-## Duas páginas, dois públicos
+## Um endereço, dois públicos
 
-| Arquivo | Para quem | O que faz |
+O site inteiro é **uma página só**: `index.html`.
+
+| Endereço | Quem abre | O que aparece |
 |---|---|---|
-| `index.html` | cliente | Landing com serviços, portfólio antes/depois, FAQ e contato no WhatsApp. |
-| `orcamento.html` | oficina | Monta o orçamento (peça e mão de obra separadas) e manda no WhatsApp ou em PDF. |
+| `index.html` | o cliente | Landing: serviços, portfólio, FAQ, contato |
+| `index.html#oficina` | a oficina | O montador de orçamento, no lugar do site |
 
-O `orcamento.html` é ferramenta interna — está com `noindex` e não é linkado
-na landing de propósito. Quem precisa dele acessa pelo endereço direto.
+O `#oficina` no fim do endereço é a porta de entrada da oficina. Não existe
+link para ela em lugar nenhum do site — quem não souber o endereço não chega.
+
+E não é só esconder com CSS: **a ferramenta não está no HTML**. O arquivo que
+o cliente baixa não contém nem os campos, nem os botões, nem a palavra
+"orçamento" da ferramenta. Ela é montada por `js/orcamento.js`, e esse arquivo
+(mais o `css/orcamento.css`) só é baixado quando alguém entra por `#oficina`.
+Quem só quer ver o site não paga por eles, e o Google não tem o que indexar.
+
+O `orcamento.html` continua existindo, mas virou só um atalho: quem tiver o
+endereço antigo salvo é mandado para `index.html#oficina`.
 
 ## Ferramenta de orçamento
 

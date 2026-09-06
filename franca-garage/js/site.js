@@ -5,6 +5,56 @@
 
 const $ = (sel) => document.querySelector(sel);
 
+/* ===================== Modo oficina =====================
+   O mesmo endereço serve os dois públicos. Terminando em #oficina, o site
+   sai da tela e entra o montador de orçamento. O cliente nunca chega aqui:
+   nada da ferramenta vem no HTML, e não há link para ela em lugar nenhum. */
+
+const SENHA_DA_PORTA = 'oficina';
+
+function ehModoOficina() {
+  return location.hash.replace('#', '') === SENHA_DA_PORTA
+      || location.search.replace('?', '') === SENHA_DA_PORTA;
+}
+
+let oficinaAberta = false;
+
+function abreModoOficina() {
+  if (oficinaAberta) return;
+  oficinaAberta = true;
+
+  // O site sai de cena — inclusive da impressão, porque [hidden] é display:none.
+  document.querySelectorAll('.cab, main, .rodape').forEach((el) => { el.hidden = true; });
+
+  document.title = 'Orçamento · França Garage';
+
+  // O CSS e o JS da ferramenta só são baixados agora. Quem só quer ver o
+  // site não paga por eles.
+  const estilo = document.createElement('link');
+  estilo.rel = 'stylesheet';
+  estilo.href = 'css/orcamento.css';
+  document.head.appendChild(estilo);
+
+  const script = document.createElement('script');
+  script.src = 'js/orcamento.js';
+  script.onload = () => window.abreOrcamento();
+  script.onerror = () => {
+    document.getElementById('appOficina').hidden = false;
+    document.getElementById('appOficina').innerHTML =
+      '<p style="padding:40px;text-align:center">Não deu para carregar a ferramenta. Verifique a internet e recarregue.</p>';
+  };
+  document.body.appendChild(script);
+}
+
+if (ehModoOficina()) {
+  abreModoOficina();
+} else {
+  // Se digitar #oficina com a página já aberta, também entra.
+  window.addEventListener('hashchange', () => { if (ehModoOficina()) abreModoOficina(); });
+}
+
+
+
 /* Escapa texto do conteudo.js antes de virar HTML. */
 function escapa(texto) {
   const d = document.createElement('div');
