@@ -12,12 +12,36 @@ const $ = (sel) => document.querySelector(sel);
 
 const SENHA_DA_PORTA = 'oficina';
 
+/* Sobe este número sempre que mexer em js/orcamento.js ou css/orcamento.css.
+   Ele entra no endereço do arquivo e força o navegador a buscar a versão
+   nova em vez de usar a que ele guardou. Sem isso, quem abriu a ferramenta
+   antes continua com o arquivo velho — e o velho declara os mesmos nomes
+   que este arquivo, o que quebra a página em silêncio (tela preta). */
+const VERSAO_OFICINA = '2';
+
 function ehModoOficina() {
   return location.hash.replace('#', '') === SENHA_DA_PORTA
       || location.search.replace('?', '') === SENHA_DA_PORTA;
 }
 
 let oficinaAberta = false;
+
+/* Nunca deixa tela preta: se a ferramenta não subir, o site volta e a
+   pessoa lê o que aconteceu, em vez de olhar para o nada. */
+function desisteDaOficina(motivo) {
+  document.querySelectorAll('.cab, main, .rodape').forEach((el) => { el.hidden = true; });
+
+  const raiz = document.getElementById('appOficina');
+  raiz.hidden = false;
+  raiz.innerHTML =
+    '<div style="min-height:100vh;display:grid;place-items:center;padding:32px;text-align:center;font-family:system-ui,sans-serif;color:#fff">'
+    + '<div style="max-width:34ch">'
+    + '<p style="font-size:1.1rem;font-weight:600;margin:0 0 10px">Não deu para abrir a ferramenta.</p>'
+    + '<p style="color:#a2a2aa;margin:0 0 22px">' + motivo + '</p>'
+    + '<a href="?recarregar=' + Date.now() + '#' + SENHA_DA_PORTA + '" '
+    + 'style="display:inline-block;padding:12px 24px;border-radius:99px;background:#fff;color:#000;font-weight:600;text-decoration:none">Tentar de novo</a>'
+    + '</div></div>';
+}
 
 function abreModoOficina() {
   if (oficinaAberta) return;
@@ -28,21 +52,42 @@ function abreModoOficina() {
 
   document.title = 'Orçamento · França Garage';
 
-  // O CSS e o JS da ferramenta só são baixados agora. Quem só quer ver o
-  // site não paga por eles.
   const estilo = document.createElement('link');
   estilo.rel = 'stylesheet';
-  estilo.href = 'css/orcamento.css';
+  estilo.href = 'css/orcamento.css?v=' + VERSAO_OFICINA;
   document.head.appendChild(estilo);
 
+  // O CSS e o JS da ferramenta só são baixados agora. Quem só quer ver o
+  // site não paga por eles.
+  carregaFerramenta('js/orcamento.js?v=' + VERSAO_OFICINA, true);
+}
+
+function carregaFerramenta(endereco, podeTentarDeNovo) {
   const script = document.createElement('script');
-  script.src = 'js/orcamento.js';
-  script.onload = () => window.abreOrcamento();
-  script.onerror = () => {
-    document.getElementById('appOficina').hidden = false;
-    document.getElementById('appOficina').innerHTML =
-      '<p style="padding:40px;text-align:center">Não deu para carregar a ferramenta. Verifique a internet e recarregue.</p>';
+  script.src = endereco;
+
+  script.onerror = () => desisteDaOficina('O arquivo não chegou. Verifique a internet.');
+
+  script.onload = () => {
+    // O arquivo pode ter chegado e mesmo assim não valer: se for uma versão
+    // antiga guardada pelo navegador, ela não cria esta função.
+    if (typeof window.abreOrcamento !== 'function') {
+      if (podeTentarDeNovo) {
+        // Segunda tentativa furando qualquer cache.
+        carregaFerramenta('js/orcamento.js?nocache=' + Date.now(), false);
+      } else {
+        desisteDaOficina('Seu navegador guardou uma versão antiga do arquivo.');
+      }
+      return;
+    }
+
+    try {
+      window.abreOrcamento();
+    } catch (erro) {
+      desisteDaOficina('A ferramenta carregou mas não abriu: ' + erro.message);
+    }
   };
+
   document.body.appendChild(script);
 }
 
@@ -51,23 +96,6 @@ if (ehModoOficina()) {
 } else {
   // Se digitar #oficina com a página já aberta, também entra.
   window.addEventListener('hashchange', () => { if (ehModoOficina()) abreModoOficina(); });
-}
-
-
-
-/* Escapa texto do conteudo.js antes de virar HTML. */
-function escapa(texto) {
-  const d = document.createElement('div');
-  d.textContent = String(texto ?? '');
-  return d.innerHTML;
-}
-
-/* Um "lado" do comparador: a foto, ou o fundo listrado quando não tem foto. */
-function lado(caminho, classe, alternativo, aviso) {
-  if (caminho) {
-    return `<div class="antes-depois__lado ${classe}"><img src="${escapa(caminho)}" alt="${escapa(alternativo)}" loading="lazy"></div>`;
-  }
-  return `<div class="antes-depois__lado ${classe}">${aviso}</div>`;
 }
 
 /* ---------- Fotos de fundo (decorativas) ---------- */
