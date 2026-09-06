@@ -31,6 +31,11 @@ const FUNDOS = {
   // Suba o arquivo em img/ e escreva o caminho aqui. Ex.: 'img/drift.mp4'
   // Leia o aviso do vídeo no README antes: peso, formato e direitos.
   hero_video: 'img/drift.mp4',
+
+  // Se a pessoa LIGOU a economia de dados no celular, o vídeo não carrega e
+  // fica só a foto. Ponha true para tocar mesmo assim (gasta a internet
+  // dela contra a vontade — pense antes).
+  video_com_economia_de_dados: false,
   chamada:   'img/chevette-dourado.jpg', // Chevette dourado — fundo da faixa final
   escuridao: 0.72,   // 0 a 1
 

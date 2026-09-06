@@ -47,32 +47,68 @@ function montaFundos() {
 }
 
 /* O vídeo do topo entra por cima da foto — e a foto vira o cartaz que
-   aparece antes de o vídeo carregar. */
+   aparece antes de o vídeo carregar.
+
+   Celular é o caso difícil. iOS e Android só deixam tocar sozinho se o
+   vídeo estiver mudo E marcado para tocar dentro da página (playsinline).
+   No iOS não basta o atributo no HTML: a propriedade precisa estar ligada
+   no objeto antes do play. E mesmo assim o Modo de Baixo Consumo bloqueia
+   — por isso existe a segunda tentativa no primeiro toque. */
 function montaVideoDoTopo() {
   const video = document.getElementById('heroVideo');
   if (!video || !FUNDOS.hero_video) return;
 
   // Quem pediu menos movimento no sistema fica só com a foto.
-  const quietinho = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (quietinho) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // Em rede economizando dados, também fica só a foto.
+  // Só respeita quem LIGOU a economia de dados no aparelho. Sinal fraco não
+  // bloqueia mais: o vídeo demora, mas a foto segura a tela enquanto isso.
   const rede = navigator.connection;
-  if (rede && (rede.saveData || /^(slow-)?2g$/.test(rede.effectiveType || ''))) return;
+  if (rede && rede.saveData && FUNDOS.video_com_economia_de_dados !== true) return;
 
   document.getElementById('heroFundo').hidden = false;
 
-  video.src = encodeURI(FUNDOS.hero_video);
-  if (FUNDOS.hero) video.poster = encodeURI(FUNDOS.hero);
+  // Tudo o que o celular exige, na propriedade e no atributo.
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');   // iOS antigo
+  video.setAttribute('autoplay', '');
+  video.disablePictureInPicture = true;
+  video.controls = false;
 
-  // Só mostra depois que há imagem para mostrar, senão pisca preto.
+  if (FUNDOS.hero) video.poster = encodeURI(FUNDOS.hero);
+  video.src = encodeURI(FUNDOS.hero_video);
+
+  // Só aparece quando há imagem para mostrar, senão pisca preto.
   video.addEventListener('loadeddata', () => { video.hidden = false; }, { once: true });
 
-  // Se o vídeo não carregar, a foto continua lá e ninguém percebe.
+  // Se o arquivo falhar, a foto continua lá e ninguém percebe.
   video.addEventListener('error', () => { video.hidden = true; }, { once: true });
 
+  tentaTocar(video, true);
+}
+
+/* iOS com Baixo Consumo, e alguns Android, recusam o play automático. Nesse
+   caso a foto fica, e a gente tenta de novo no primeiro toque da pessoa —
+   aí o navegador considera que houve gesto e libera. */
+function tentaTocar(video, primeiraVez) {
   const tocar = video.play();
-  if (tocar && tocar.catch) tocar.catch(() => { video.hidden = true; });
+  if (!tocar || !tocar.catch) return;
+
+  tocar
+    .then(() => { video.hidden = false; })
+    .catch(() => {
+      video.hidden = true;
+      if (!primeiraVez) return;
+
+      const deNovo = () => tentaTocar(video, false);
+      document.addEventListener('touchstart', deNovo, { once: true, passive: true });
+      document.addEventListener('click', deNovo, { once: true });
+      document.addEventListener('scroll', deNovo, { once: true, passive: true });
+    });
 }
 
 /* ---------- Fotos dos cards de serviço ---------- */
