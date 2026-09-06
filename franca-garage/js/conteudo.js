@@ -25,9 +25,17 @@
    para 0.85 se a foto for clara e o texto ficar difícil de ler.
    ------------------------------------------------------------------------- */
 const FUNDOS = {
-  hero:      '',     // Fundo do topo da página. Ex.: 'img/fundo-topo.jpg'
-  chamada:   '',     // Fundo da faixa "Manda a foto do estrago", lá embaixo
+  hero:      'img/vectra-preto.jpg',      // Vectra preto — fundo do topo
+  chamada:   'img/chevette-dourado.jpg', // Chevette dourado — fundo da faixa final
   escuridao: 0.72,   // 0 a 1
+
+  // A faixa final tem texto por cima da foto inteira, então precisa escurecer
+  // mais. Se apagar esta linha, ela usa a escuridão acima + 0.14.
+  escuridao_chamada: 0.86,
+
+  // O site é preto e branco. Deixe true que a foto entra sem cor e combina
+  // com o resto. Troque para false se quiser a cor original da foto.
+  preto_e_branco: true,
 };
 
 

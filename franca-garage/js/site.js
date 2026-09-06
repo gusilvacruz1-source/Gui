@@ -25,6 +25,12 @@ function montaFundos() {
   if (typeof FUNDOS === 'undefined') return;
 
   document.documentElement.style.setProperty('--escuridao', String(FUNDOS.escuridao ?? 0.72));
+  document.documentElement.style.setProperty('--pb', FUNDOS.preto_e_branco === false ? '0' : '1');
+
+  // A faixa final tem texto sobre a foto inteira: se não vier valor próprio,
+  // escurece mais que o topo, senão o texto some em foto clara.
+  const escuroChamada = FUNDOS.escuridao_chamada ?? Math.min((FUNDOS.escuridao ?? 0.72) + 0.14, 0.92);
+  document.documentElement.style.setProperty('--escuridao-chamada', String(escuroChamada));
 
   const poe = (id, caminho) => {
     const el = document.getElementById(id);
