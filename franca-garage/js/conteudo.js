@@ -104,7 +104,7 @@ const FOTOS_SERVICOS = {
   funilaria: 'img/funilaria.jpg',
   pintura:   'img/pintura.jpg',
   solda:     '',                        // esperando uma foto sem marca d'água
-  orcamento: 'img/orcamento-demo.mp4',  // vídeo: toca em laço, mudo
+  orcamento: '',                        // esperando uma gravação da própria ferramenta
 };
 
 
