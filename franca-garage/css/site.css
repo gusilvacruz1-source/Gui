@@ -417,6 +417,7 @@ body {
 .cartao__figura {
   flex: 1;
   min-height: 168px;
+  overflow: hidden;
   border: 1px solid var(--linha);
   border-radius: var(--raio);
   background:
@@ -761,6 +762,110 @@ body {
   color: var(--texto-3);
 }
 
+
+/* Foto ou vídeo dentro do card. O zoom no hover é curto e lento: o card
+   reage ao mouse sem virar carrossel. */
+.cartao__midia {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  /* Sem cor, para acompanhar o resto do site. A mesma chave dos fundos
+     (preto_e_branco no conteudo.js) manda aqui. */
+  filter: grayscale(var(--pb, 1));
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.5s ease;
+}
+
+/* Passar o mouse devolve a cor da foto. O card ganha uma recompensa em vez
+   de só um zoom. */
+.cartao:hover .cartao__midia {
+  transform: scale(1.045);
+  filter: grayscale(0);
+}
+
+/* ===================== Cursor de bolinha =====================
+   Só existe em quem tem mouse. Em tela de toque nada disso é criado, e o
+   cursor do sistema nunca é escondido. */
+html.com-bolinha, html.com-bolinha * { cursor: none; }
+
+.bolinha, .bolinha__anel {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 90;
+  border-radius: 50%;
+  pointer-events: none;
+  /* difference mantém a bolinha visível tanto no preto quanto no card
+     branco dos preços, sem precisar trocar de cor na mão. */
+  mix-blend-mode: difference;
+  will-change: transform;
+}
+
+.bolinha {
+  width: 7px; height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  background: #fff;
+}
+
+.bolinha__anel {
+  width: 32px; height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  transition: width 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              margin 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.28s ease,
+              opacity 0.28s ease;
+}
+
+/* Sobre algo clicável o anel abre; sobre o comparador ele vira alça. */
+.bolinha__anel.pegando {
+  width: 58px; height: 58px;
+  margin: -29px 0 0 -29px;
+  border-color: #fff;
+}
+
+.bolinha__anel.arrastando {
+  width: 74px; height: 74px;
+  margin: -37px 0 0 -37px;
+  border-width: 2px;
+}
+
+.bolinha.sumiu, .bolinha__anel.sumiu { opacity: 0; }
+
+/* ===================== Entrada do topo =====================
+   A primeira dobra não espera rolagem: sobe sozinha ao abrir, em escada. */
+@keyframes sobeEntrando {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero__conteudo > * {
+  animation: sobeEntrando 0.75s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.hero__conteudo > .aviso-topo   { animation-delay: 0.05s; }
+.hero__conteudo > .hero__titulo { animation-delay: 0.14s; }
+.hero__conteudo > .hero__texto  { animation-delay: 0.24s; }
+.hero__conteudo > .hero__botoes { animation-delay: 0.34s; }
+
+/* Sublinhado que corre no menu. */
+.menu a { position: relative; }
+.menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.menu a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* O botão afunda ao ser apertado — devolve o toque. */
+.bt:active { transform: translateY(1px) scale(0.985); }
+
 /* ===================== Entrada ao rolar ===================== */
 .surge {
   opacity: 0;
@@ -808,5 +913,8 @@ body {
   html { scroll-behavior: auto; }
   .surge { opacity: 1; transform: none; transition: none; }
   .faixa__trilho { animation: none; }
-  .bt:hover { transform: none; }
+  .bt:hover, .bt:active { transform: none; }
+  .hero__conteudo > * { animation: none; }
+  .cartao:hover .cartao__midia { transform: none; filter: grayscale(var(--pb, 1)); }
+  .menu a::after { transition: none; }
 }

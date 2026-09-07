@@ -189,20 +189,63 @@ function tentaTocar(video, primeiraVez) {
     });
 }
 
-/* ---------- Fotos dos cards de serviço ---------- */
+/* ---------- Mídia dos cards de serviço ----------
+   Aceita foto ou vídeo. Vídeo entra mudo, em laço e sem controles: é
+   ilustração, não filme para assistir. */
+const EH_VIDEO = /\.(mp4|webm|mov|m4v)$/i;
+
 function montaFotosServicos() {
   if (typeof FOTOS_SERVICOS !== 'object') return;
 
   document.querySelectorAll('[data-foto]').forEach((figura) => {
     const caminho = FOTOS_SERVICOS[figura.dataset.foto];
     if (!caminho) return;
+
     figura.textContent = '';
     figura.style.padding = '0';
+
+    if (EH_VIDEO.test(caminho)) {
+      const video = document.createElement('video');
+      video.src = encodeURI(caminho);
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('loop', '');
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+      video.preload = 'metadata';
+      video.className = 'cartao__midia';
+
+      // Se o navegador não souber tocar, volta o fundo listrado do card.
+      video.addEventListener('error', () => {
+        figura.textContent = 'Vídeo não suportado neste navegador';
+        figura.style.padding = '';
+      }, { once: true });
+
+      figura.appendChild(video);
+
+      // Só começa quando o card aparece na tela — não gasta dados de quem
+      // nem chegou lá.
+      if ('IntersectionObserver' in window) {
+        const olho = new IntersectionObserver((e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) { video.play().catch(() => {}); olho.unobserve(x.target); }
+          });
+        }, { threshold: 0.25 });
+        olho.observe(figura);
+      } else {
+        video.play().catch(() => {});
+      }
+      return;
+    }
+
     const img = document.createElement('img');
-    img.src = caminho;
-    img.alt = `França Garage — ${figura.dataset.foto}`;
+    img.src = encodeURI(caminho);
+    img.alt = 'França Garage — ' + figura.dataset.foto;
     img.loading = 'lazy';
-    img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:inherit';
+    img.className = 'cartao__midia';
     figura.appendChild(img);
   });
 }
@@ -379,6 +422,85 @@ function limpaLinksMortos() {
   });
 }
 
+
+/* ---------- Cursor de bolinha ----------
+   Duas peças: o ponto, que gruda no mouse, e o anel, que chega atrasado.
+   O atraso é o que dá a sensação de peso — sem ele parecem dois adesivos.
+
+   Só é criado em quem tem mouse de verdade (pointer: fine). Em celular, em
+   tablet e para quem pediu menos movimento, nada disso existe e o cursor do
+   sistema fica intacto. */
+function ligaBolinha() {
+  const temMouse = window.matchMedia('(pointer: fine)').matches;
+  const quietinho = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!temMouse || quietinho) return;
+
+  // Na ferramenta de orçamento o cursor do sistema faz falta: são campos
+  // para digitar, com barra de texto e seleção.
+  if (ehModoOficina()) return;
+
+  const ponto = document.createElement('div');
+  ponto.className = 'bolinha sumiu';
+  const anel = document.createElement('div');
+  anel.className = 'bolinha__anel sumiu';
+  document.body.append(ponto, anel);
+
+  let alvoX = innerWidth / 2, alvoY = innerHeight / 2;
+  let anelX = alvoX, anelY = alvoY;
+  let apareceu = false;
+
+  document.addEventListener('pointermove', (e) => {
+    if (e.pointerType && e.pointerType !== 'mouse') return;
+    alvoX = e.clientX;
+    alvoY = e.clientY;
+
+    if (!apareceu) {
+      apareceu = true;
+      ponto.classList.remove('sumiu');
+      anel.classList.remove('sumiu');
+      // Só agora esconde o cursor do sistema. Se algo tivesse falhado antes
+      // daqui, a pessoa continuaria com o cursor normal em vez de ficar sem
+      // nenhum.
+      document.documentElement.classList.add('com-bolinha');
+    }
+
+    ponto.style.transform = `translate(${alvoX}px, ${alvoY}px)`;
+  }, { passive: true });
+
+  // Some quando o mouse sai da janela, senão fica um ponto parado na borda.
+  document.addEventListener('mouseleave', () => {
+    ponto.classList.add('sumiu');
+    anel.classList.add('sumiu');
+  });
+  document.addEventListener('mouseenter', () => {
+    if (!apareceu) return;
+    ponto.classList.remove('sumiu');
+    anel.classList.remove('sumiu');
+  });
+
+  // O anel persegue o ponto: 18% da distância por quadro.
+  (function persegue() {
+    anelX += (alvoX - anelX) * 0.18;
+    anelY += (alvoY - anelY) * 0.18;
+    anel.style.transform = `translate(${anelX}px, ${anelY}px)`;
+    requestAnimationFrame(persegue);
+  })();
+
+  // Sobre o que dá para clicar, o anel abre. Sobre o comparador, abre mais.
+  const clicavel = 'a, button, summary, input, select, textarea, .plano, .faq__item';
+  document.addEventListener('pointerover', (e) => {
+    if (!e.target.closest) return;
+    anel.classList.toggle('pegando', !!e.target.closest(clicavel));
+    anel.classList.toggle('arrastando', !!e.target.closest('[data-antes-depois]'));
+  });
+
+  // Aperto do botão do mouse encolhe o anel por um instante.
+  document.addEventListener('pointerdown', () => anel.classList.add('arrastando'));
+  document.addEventListener('pointerup', () => {
+    anel.classList.remove('arrastando');
+  });
+}
+
 /* ---------- Cabeçalho e menu ---------- */
 function ligaCabecalho() {
   const cab = $('#cab');
@@ -415,6 +537,7 @@ montaContato();
 ligaComparadores();   // depois de montar o portfólio
 ligaEntrada();        // depois de tudo estar na página
 ligaCabecalho();
+ligaBolinha();
 limpaLinksMortos();
 
 const ano = $('#ano');

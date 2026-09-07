@@ -101,10 +101,10 @@ const TRABALHOS = [
    listrado.
    ------------------------------------------------------------------------- */
 const FOTOS_SERVICOS = {
-  funilaria: '',    // Ex.: 'img/funilaria.jpg'
-  pintura:   '',
-  solda:     '',
-  orcamento: '',    // Foto de um orçamento impresso, ou da oficina
+  funilaria: 'img/funilaria.jpg',
+  pintura:   'img/pintura.jpg',
+  solda:     '',                        // esperando uma foto sem marca d'água
+  orcamento: 'img/orcamento-demo.mp4',  // vídeo: toca em laço, mudo
 };
 
 
