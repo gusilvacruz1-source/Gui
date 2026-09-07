@@ -778,6 +778,11 @@ body {
               filter 0.5s ease;
 }
 
+/* O card do orçamento é largo e baixo: o corte centralizado pegava só os
+   rostos e deixava as mãos de fora — e são as mãos que contam o trato.
+   Puxa o enquadramento para baixo. */
+[data-foto="orcamento"] .cartao__midia { object-position: center 68%; }
+
 /* Passar o mouse devolve a cor da foto. O card ganha uma recompensa em vez
    de só um zoom. */
 .cartao:hover .cartao__midia {

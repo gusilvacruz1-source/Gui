@@ -103,8 +103,8 @@ const TRABALHOS = [
 const FOTOS_SERVICOS = {
   funilaria: 'img/funilaria.jpg',
   pintura:   'img/pintura.jpg',
-  solda:     '',                        // esperando uma foto sem marca d'água
-  orcamento: '',                        // esperando uma gravação da própria ferramenta
+  solda:     'img/solda.jpg',
+  orcamento: 'img/acordo.jpg',          // o aperto de mão: o trato fechado
 };
 
 
