@@ -149,8 +149,8 @@ const DEPOIMENTOS = [
    Aparece como crédito discreto no rodapé. Para tirar, apague os valores.
    ------------------------------------------------------------------------- */
 const CRIACAO = {
-  nome:      '@isowfu',
-  instagram: 'https://www.instagram.com/isowfu/',
+  nome:      '@isowgu',
+  instagram: 'https://www.instagram.com/isowgu/',
   whatsapp:  '5542998182215',   // 55 + DDD + número, só dígitos
   mensagem:  'Olá! Vi o site da França Garage e queria falar sobre um site.',
 };
