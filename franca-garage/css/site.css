@@ -871,6 +871,21 @@ html.com-bolinha, html.com-bolinha * { cursor: none; }
 /* O botão afunda ao ser apertado — devolve o toque. */
 .bt:active { transform: translateY(1px) scale(0.985); }
 
+/* Crédito de criação: discreto, mas clicável. */
+.credito { display: inline-flex; align-items: center; gap: 9px; }
+
+.credito a {
+  color: var(--texto-2);
+  transition: color 0.2s ease;
+}
+.credito a:hover { color: var(--texto); }
+
+.credito__risco {
+  width: 1px;
+  height: 11px;
+  background: var(--linha-forte);
+}
+
 /* ===================== Entrada ao rolar ===================== */
 .surge {
   opacity: 0;

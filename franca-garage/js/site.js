@@ -325,6 +325,21 @@ function montaDepoimentos() {
   }).join('');
 }
 
+/* ---------- Crédito de quem fez o site ---------- */
+function montaCredito() {
+  const caixa = document.getElementById('credito');
+  if (!caixa || typeof CRIACAO === 'undefined' || !CRIACAO.nome) return;
+
+  const insta = document.getElementById('creditoInsta');
+  insta.textContent = CRIACAO.nome;
+  insta.href = CRIACAO.instagram;
+
+  document.getElementById('creditoZap').href =
+    `https://wa.me/${CRIACAO.whatsapp}?text=${encodeURIComponent(CRIACAO.mensagem)}`;
+
+  caixa.hidden = false;
+}
+
 /* ---------- Links de contato ---------- */
 function montaContato() {
   if (typeof CONTATO === 'undefined') return;
@@ -533,6 +548,7 @@ montaNumeros();
 montaTrabalhos();
 montaDepoimentos();
 montaContato();
+montaCredito();
 
 ligaComparadores();   // depois de montar o portfólio
 ligaEntrada();        // depois de tudo estar na página

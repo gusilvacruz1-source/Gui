@@ -145,6 +145,19 @@ const DEPOIMENTOS = [
    do DDD, e celular no Brasil tem 9. Se o certo for 99918-1070, troque
    '554299181070' por '5542999181070' aqui embaixo.
    ------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------
+   8) QUEM FEZ O SITE
+
+   Aparece como crédito discreto no rodapé. Para tirar, apague os valores.
+   ------------------------------------------------------------------------- */
+const CRIACAO = {
+  nome:      '@isowfu',
+  instagram: 'https://www.instagram.com/isowfu/',
+  whatsapp:  '5542998182215',   // 55 + DDD + número, só dígitos
+  mensagem:  'Olá! Vi o site da França Garage e queria falar sobre um site.',
+};
+
+
 const CONTATO = {
   whatsapp:  '554299181070',
   mensagem:  'Olá! Vim pelo site da França Garage. Queria um orçamento — vou mandar a foto do dano, o modelo e o ano do carro.',
