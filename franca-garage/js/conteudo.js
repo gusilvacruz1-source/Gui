@@ -140,10 +140,8 @@ const DEPOIMENTOS = [
 /* -------------------------------------------------------------------------
    7) OS DADOS DA OFICINA
 
-   ATENÇÃO NO TELEFONE: o número precisa ser  55 + DDD + número, só dígitos.
-   O contato que você mandou aparece como (42) 9918-1070 — 8 dígitos depois
-   do DDD, e celular no Brasil tem 9. Se o certo for 99918-1070, troque
-   '554299181070' por '5542999181070' aqui embaixo.
+   O TELEFONE precisa ser  55 + DDD + número, só dígitos, sem espaço e sem
+   traço. Ex.: (42) 99918-1070 vira '5542999181070'.
    ------------------------------------------------------------------------- */
 /* -------------------------------------------------------------------------
    8) QUEM FEZ O SITE
@@ -159,7 +157,7 @@ const CRIACAO = {
 
 
 const CONTATO = {
-  whatsapp:  '554299181070',
+  whatsapp:  '5542999181070',
   mensagem:  'Olá! Vim pelo site da França Garage. Queria um orçamento — vou mandar a foto do dano, o modelo e o ano do carro.',
   instagram: 'https://www.instagram.com/franca_garage_/',
   mapa:      'https://maps.app.goo.gl/7gZPCvxCB3j1DCh47',

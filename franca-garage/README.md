@@ -114,11 +114,11 @@ o texto ficar difícil de ler.
 Sem número, o card some. Sem depoimento, a seção inteira sai do ar. É de
 propósito: melhor faltar do que publicar `00` ou depoimento inventado.
 
-### Aviso sobre o telefone
+### Telefone
 
-O contato recebido aparece como **+55 42 9918-1070** — 8 dígitos depois do DDD.
-Celular no Brasil tem 9. Se o número certo for 99918-1070, troque
-`554299181070` por `5542999181070` em `js/conteudo.js` e em `js/orcamento.js`.
+O WhatsApp da oficina é **(42) 99918-1070**, e nos arquivos ele vive como
+`5542999181070` — 55 + DDD + número, só dígitos. Está em `js/conteudo.js`
+(links do site) e em `js/orcamento.js` (timbre do orçamento impresso).
 
 ## Rodar local
 

@@ -212,8 +212,7 @@ const OFICINA = {
   nome: 'França Garage',
   ramo: 'Funilaria, Pintura e Solda',
   endereco: 'Rua Políbio Meira Cotrim, 303 — Bela Vista, Imbaú-PR',
-  // Confira este número: o contato veio como "+55 42 9918-1070".
-  telefone: '(42) 9918-1070',
+  telefone: '(42) 99918-1070',
   instagram: '@franca_garage_',
 };
 
